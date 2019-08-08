@@ -1,4 +1,4 @@
-# Arduino, ESP8266 and STM32 7-segment multiplexed outputs library - uMuxOutputLib #
+# Arduino, ESP8266 and STM32 multiplexed outputs library - uMuxOutputLib #
 
 ## What is this repository for? ##
 
@@ -88,7 +88,7 @@ Included on example folder, available on Arduino IDE.
 ## Who do I talk to? ##
 
  * [Naguissa](https://github.com/Naguissa)
- * https://www.foroelectro.net/electronica-digital-microcontroladores-f8/usevensegmentlib-libreria-arduino-para-controlar-d-t193.html
+ * https://www.foroelectro.net/librerias-arduino-ide-f29/umuxoutputlib-libreria-arduino-para-controlar-mult-t293.html
  * https://www.naguissa.com
 
 
