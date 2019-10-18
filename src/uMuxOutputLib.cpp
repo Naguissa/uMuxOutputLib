@@ -7,7 +7,7 @@
  * @copyright Naguissa
  * @author Naguissa
  * @email naguissa@foroelectro.net
- * @version 1.0.0
+ * @version 1.0.1
  * @created 2019-08-08
  */
 #include <Arduino.h>
@@ -82,10 +82,10 @@ uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxe
  *
  * Absolute position is calculated as: mux * npins + pin
  *
- * @param uint position Position of the bit on linear fashion
+ * @param uint16_t position Position of the bit on linear fashion
  * @param bool value Value to be set
  */
-void uMuxOutputLib::setPinAbsolute(uint position, bool value) {
+void uMuxOutputLib::setPinAbsolute(uint16_t position, bool value) {
 	if (value) {
 		_values[position / 8] |= (0b00000001 << (position % 8));
 	} else {
@@ -113,10 +113,10 @@ void uMuxOutputLib::setPinMuxPin(uint8_t pin, uint8_t mux, bool value) {
  *
  * Absolute position is calculated as: mux * npins + pin
  *
- * @param uint position Position of the bit on linear fashion
+ * @param uint16_t position Position of the bit on linear fashion
  * @return bool value Current value of that pin
  */
-bool uMuxOutputLib::getPinAbsolute(uint position) {
+bool uMuxOutputLib::getPinAbsolute(uint16_t position) {
 	return (bool) (_values[position / 8] & (0b00000001 << (position % 8)));
 }
 

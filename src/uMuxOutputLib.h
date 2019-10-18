@@ -7,7 +7,7 @@
  * @copyright Naguissa
  * @author Naguissa
  * @email naguissa@foroelectro.net
- * @version 1.0.0
+ * @version 1.0.1
  * @created 2019-08-08
  */
 #ifndef _uMuxOutputLib_
@@ -23,9 +23,9 @@
 			uMuxOutputLib(uint8_t, uint8_t, int *, int *, unsigned int);
 
 			// Set and get
-			void setPinAbsolute(uint, bool);
+			void setPinAbsolute(uint16_t, bool);
 			void setPinMuxPin(uint8_t, uint8_t, bool);
-			bool getPinAbsolute(uint);
+			bool getPinAbsolute(uint16_t);
 			bool getPinMuxPin(uint8_t, uint8_t);
 
 			// To run main interrupt of this library; call it when you want to it start working.
