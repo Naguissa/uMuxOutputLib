@@ -1,5 +1,7 @@
 # Arduino, ESP8266 and STM32 multiplexed outputs library - uMuxOutputLib #
 
+Master status:   [![Build Status](https://travis-ci.org/Naguissa/uMuxOutputLib.svg?branch=master)](https://travis-ci.org/Naguissa/uMuxOutputLib)
+
 ## What is this repository for? ##
 
 Really tiny library to control multiplexed outputs.
