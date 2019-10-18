@@ -54,7 +54,7 @@ uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxe
 		_muxes[i] = muxes[i];
 		pinMode(muxes[i], OUTPUT);
 	}
-	uint max = npins * nmuxes / 8 + 1; // Stored values
+	uint16_t max = npins * nmuxes / 8 + 1; // Stored values
 	for (i = 0; i < max; i++) {
 		_values[i] = 0;
 	}
@@ -165,7 +165,7 @@ void uMuxOutputLib::_interrupt(void) {
 	digitalWrite(_muxes[_lastMux], !activeMuxValue);
 
 	// Set new pins values
-	uint position = _currentMux * _npins; // Calculate base position and increment it in for loop to save instructions
+	uint16_t position = _currentMux * _npins; // Calculate base position and increment it in for loop to save instructions
 	for (uint8_t i = 0; i < _npins; i++) {
 		digitalWrite(_pins[i], (bool) (_values[position / 8] & (0b00000001 << (position % 8))));
 		position++;
