@@ -1,16 +1,25 @@
 /**
- * Really tiny library to control multiplexed outputs.
+ * \mainpage
+ * \brief Really tiny library to control multiplexed outputs.
  *
  * It cycles among multiplexed outputs using a timer to control all pins.
  *
+ * Library depends on uTimerLib library, https://github.com/Naguissa/uTimerLib
  *
- * @copyright Naguissa
- * @author Naguissa
- * @email naguissa@foroelectro.net
- * @version 1.0.1
- * @created 2019-08-08
+ * @see <a href="https://github.com/Naguissa/uMuxOutputLib">https://github.com/Naguissa/uMuxOutputLib</a>
+ * @see <a href="https://github.com/Naguissa/uSevenSegmentLib">https://github.com/Naguissa/uTimerLib</a> - Needed dependecy
+ * @see <a href="https://www.foroelectro.net/librerias-arduino-ide-f29/umuxoutputlib-libreria-arduino-para-controlar-mult-t293.html">https://www.foroelectro.net/librerias-arduino-ide-f29/umuxoutputlib-libreria-arduino-para-controlar-mult-t293.html</a>
+ * @see <a href="mailto:naguissa@foroelectro.net">naguissa@foroelectro.net</a>
+ * @version 1.0.2
  */
+/** \file uSevenSegmentLib.h
+ *   \brief uSevenSegmentLib header file
+ */
+
 #ifndef _uMuxOutputLib_
+	/**
+	 * \brief Prevent multiple inclussion
+	 */
 	#define _uMuxOutputLib_
 
 	#include "Arduino.h"

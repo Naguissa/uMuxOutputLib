@@ -1,14 +1,18 @@
 /**
- * Really tiny library to control multiplexed outputs.
+ * \class uMuxOutputLib
+ * \brief Really tiny library to control multiplexed outputs.
  *
  * It cycles among multiplexed outputs using a timer to control all pins.
  *
+ * Library depends on uTimerLib library, https://github.com/Naguissa/uTimerLib
  *
+ * @file uMuxOutputLib.cpp
  * @copyright Naguissa
  * @author Naguissa
- * @email naguissa@foroelectro.net
- * @version 1.0.1
- * @created 2019-08-08
+ * @see <a href="https://github.com/Naguissa/uMuxOutputLib">https://github.com/Naguissa/uMuxOutputLib</a>
+ * @see <a href="https://www.foroelectro.net/librerias-arduino-ide-f29/rtclib-arduino-libreria-simple-y-eficaz-para-rtc-y-t95.html">https://www.foroelectro.net/librerias-arduino-ide-f29/rtclib-arduino-libreria-simple-y-eficaz-para-rtc-y-t95.html</a>
+ * @see <a href="mailto:naguissa@foroelectro.net">naguissa@foroelectro.net</a>
+ * @version 1.0.2
  */
 #include <Arduino.h>
 #include "uMuxOutputLib.h"
@@ -18,12 +22,12 @@ uMuxOutputLib * uMuxOutputLib::_instance = NULL;
 
 
 /**
- * Constructor
+ * \brief Constructor
  *
- * @param uint8_t npins Number of pins
- * @param uint8_t nmuxes Number of muxes
- * @param int* array of pins for outputs
- * @param int* array of pins for muxes
+ * @param npins Number of pins
+ * @param nmuxes Number of muxes
+ * @param pins array of pins for outputs
+ * @param muxes array of pins for muxes
  */
 uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxes) {
 	_npins = npins;
@@ -62,13 +66,13 @@ uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxe
 
 
 /**
- * Constructor
+ * \brief Constructor
  *
- * @param uint8_t npins Number of pins
- * @param uint8_t nmuxes Number of muxes
- * @param int* array of pins for outputs
- * @param int* array of pins for muxes
- * @param unsigned int Refresh frequency (for all pins, will be multiplied by nmuxes to calculate end result)
+ * @param npins Number of pins
+ * @param nmuxes Number of muxes
+ * @param pins array of pins for outputs
+ * @param muxes array of pins for muxes
+ * @param freq Refresh frequency (for all pins, will be multiplied by nmuxes to calculate end result)
  */
 uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxes, unsigned int freq) {
 	_freq = freq;
@@ -78,12 +82,12 @@ uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxe
 
 
 /**
- * Sets a pin in linear method
+ * \brief Sets a pin in linear method
  *
  * Absolute position is calculated as: mux * npins + pin
  *
- * @param uint16_t position Position of the bit on linear fashion
- * @param bool value Value to be set
+ * @param position Position of the bit on linear fashion
+ * @param value Value to be set
  */
 void uMuxOutputLib::setPinAbsolute(uint16_t position, bool value) {
 	if (value) {
@@ -96,25 +100,25 @@ void uMuxOutputLib::setPinAbsolute(uint16_t position, bool value) {
 
 
 /**
- * Sets a pin by its pin and mux number.
+ * \brief Sets a pin by its pin and mux number.
  *
  * Note that positions starts at 0.
  *
- * @param uint8_t pin Pin position on passed pins array (starting at 0)
- * @param uint8_t mux Mux position on passed muxes array (starting at 0)
- * @param bool value Value to be set
+ * @param pin Pin position on passed pins array (starting at 0)
+ * @param mux Mux position on passed muxes array (starting at 0)
+ * @param value Value to be set
  */
 void uMuxOutputLib::setPinMuxPin(uint8_t pin, uint8_t mux, bool value) {
 	setPinAbsolute(mux * _npins + pin, value);
 }
 
 /**
- * Gets stored status in linear method
+ * \brief Gets stored status in linear method
  *
  * Absolute position is calculated as: mux * npins + pin
  *
- * @param uint16_t position Position of the bit on linear fashion
- * @return bool value Current value of that pin
+ * @param position Position of the bit on linear fashion
+ * @return Current value of that pin
  */
 bool uMuxOutputLib::getPinAbsolute(uint16_t position) {
 	return (bool) (_values[position / 8] & (0b00000001 << (position % 8)));
@@ -122,20 +126,20 @@ bool uMuxOutputLib::getPinAbsolute(uint16_t position) {
 
 
 /**
- * Gets stored status by its pin and mux number.
+ * \brief Gets stored status by its pin and mux number.
  *
  * Note that positions starts at 0.
  *
- * @param uint8_t pin Pin position on passed pins array (starting at 0)
- * @param uint8_t mux Mux position on passed muxes array (starting at 0)
- * @return bool value Current value of that pin
+ * @param pin Pin position on passed pins array (starting at 0)
+ * @param mux Mux position on passed muxes array (starting at 0)
+ * @return Current value of that pin
  */
 bool uMuxOutputLib::getPinMuxPin(uint8_t pin, uint8_t mux) {
 	return getPinAbsolute(mux * _npins + pin);
 }
 
 /**
- * Attach Timer2 interrupt
+ * \brief Attach Timer interrupt
  *
  * Needed for usual operation, but you can call loop manually instead
  */
@@ -150,17 +154,21 @@ void uMuxOutputLib::attachInterrupt() {
 
 
 /**
- * Main loop
+ * \brief Main public interrupt loop
  *
- * Refreshes all 8-segment digits
+ * Calls private loop
  */
 void uMuxOutputLib::interrupt() {
 	_instance->_interrupt();
 }
 
 
-void uMuxOutputLib::_interrupt(void) {
-
+/**
+ * \brief Main private interrupt loop
+ *
+ * Refreshes all outputs
+ */
+void uMuxOutputLib::_interrupt() {
 	// Off last mux
 	digitalWrite(_muxes[_lastMux], !activeMuxValue);
 
