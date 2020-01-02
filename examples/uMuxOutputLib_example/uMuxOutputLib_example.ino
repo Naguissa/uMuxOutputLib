@@ -3,17 +3,15 @@
  *
  * It cycles among multiplexed outputs using a timer to control all pins.
  *
+ * Functionality example
  *
- * @copyright Naguissa
- * @author Naguissa
- * @email naguissa@foroelectro.net
- * @version 1.0.0
- * @created 2019-08-08
+ * @see <a href="https://github.com/Naguissa/uSevenSegmentLib">https://github.com/Naguissa/uSevenSegmentLib</a>
+ * @see <a href="https://github.com/Naguissa/uTimerLib">https://github.com/Naguissa/uTimerLib</a> - Needed dependecy
+ * @see <a href="https://www.foroelectro.net/librerias-arduino-ide-f29/usevensegmentlib-libreria-arduino-para-controlar-d-t193.html">https://www.foroelectro.net/librerias-arduino-ide-f29/usevensegmentlib-libreria-arduino-para-controlar-d-t193.html</a>
+ * @see <a href="mailto:naguissa@foroelectro.net">naguissa@foroelectro.net</a>
  */
-
 #include "Arduino.h"
 #include "uMuxOutputLib.h"
-
 
 // Pin definitions. Change to fit your needs
 #ifdef _VARIANT_ARDUINO_STM32_
@@ -26,7 +24,6 @@
 
 uMuxOutputLib muxed(3, 2, pins, muxes);
 
-
 int i = 0;
 uint8_t tmp;
 
@@ -37,7 +34,6 @@ void setup() {
 
 	muxed.attachInterrupt();
 }
-
 
 
 void loop() {

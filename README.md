@@ -27,6 +27,14 @@ For manual installation:
  * Rename to uMuxOutputLib.zip
  * Install library on Arduino
 
+
+## Documentation and extras ##
+
+You can find all documentation and extras in this repository: https://github.com/Naguissa/uMuxOutputLib_doc_and_extras
+
+Due GitHub limitations HTML documentation is not avaliable online, you need to download the zip.
+
+
 ## Usage ##
 
 ### Constructor: ###
