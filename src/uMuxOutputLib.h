@@ -10,7 +10,7 @@
  * @see <a href="https://github.com/Naguissa/uSevenSegmentLib">https://github.com/Naguissa/uTimerLib</a> - Needed dependecy
  * @see <a href="https://www.foroelectro.net/librerias-arduino-ide-f29/umuxoutputlib-libreria-arduino-para-controlar-mult-t293.html">https://www.foroelectro.net/librerias-arduino-ide-f29/umuxoutputlib-libreria-arduino-para-controlar-mult-t293.html</a>
  * @see <a href="mailto:naguissa@foroelectro.net">naguissa@foroelectro.net</a>
- * @version 1.0.2
+ * @version 1.0.3
  */
 /** \file uSevenSegmentLib.h
  *   \brief uSevenSegmentLib header file
@@ -28,8 +28,7 @@
 	class uMuxOutputLib {
 		public:
 			// Constructors
-			uMuxOutputLib(uint8_t, uint8_t, int *, int *);
-			uMuxOutputLib(uint8_t, uint8_t, int *, int *, unsigned int);
+			uMuxOutputLib(uint8_t, uint8_t, int *, int *, unsigned int = 70);
 
 			// Set and get
 			void setPinAbsolute(uint16_t, bool);
@@ -41,7 +40,7 @@
 			void attachInterrupt();
 
 			// Used to set enabled/disabled values on MUXES
-			bool activeMuxValue = false; // Se to FALSE to invert logic.
+			bool activeMuxValue = false; // Se to TRUE to invert logic.
 
 			// Aux methods
 			static void interrupt(void);
@@ -56,10 +55,10 @@
 			int *_muxes = NULL;
 			int *_pins = NULL;
 
-			int _freq = 70;
+			int _freq;
 
-			unsigned char _currentMux = 0;
-			unsigned char _lastMux = 0;
+			uint8_t _currentMux = 0;
+			uint8_t _lastMux = 0;
 	};
 #endif
 

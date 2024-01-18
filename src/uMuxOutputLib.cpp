@@ -12,7 +12,7 @@
  * @see <a href="https://github.com/Naguissa/uMuxOutputLib">https://github.com/Naguissa/uMuxOutputLib</a>
  * @see <a href="https://www.foroelectro.net/librerias-arduino-ide-f29/rtclib-arduino-libreria-simple-y-eficaz-para-rtc-y-t95.html">https://www.foroelectro.net/librerias-arduino-ide-f29/rtclib-arduino-libreria-simple-y-eficaz-para-rtc-y-t95.html</a>
  * @see <a href="mailto:naguissa@foroelectro.net">naguissa@foroelectro.net</a>
- * @version 1.0.2
+ * @version 1.0.3
  */
 #include <Arduino.h>
 #include "uMuxOutputLib.h"
@@ -28,8 +28,10 @@ uMuxOutputLib * uMuxOutputLib::_instance = NULL;
  * @param nmuxes Number of muxes
  * @param pins array of pins for outputs
  * @param muxes array of pins for muxes
+ * @param freq Optional. Refresh frequency (for all pins, will be multiplied by nmuxes to calculate end result)
  */
-uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxes) {
+uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxes, unsigned int freq = 70) {
+	_freq = freq;
 	_npins = npins;
 	_nmuxes = nmuxes;
 	uint8_t i;
@@ -44,7 +46,8 @@ uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxe
 		free(_values);
 	}
 	// We use uint8_t to store booleans at a position to don't waste extra memory
-	_values = (uint8_t *) malloc(npins * nmuxes / 8 + 1); // Sometimes 1 extra byte, but prevents underallocating
+	uint16_t max = npins * nmuxes / 8 + 1; // Stored values
+	_values = (uint8_t *) malloc(max); // Sometimes 1 extra byte, but prevents underallocating
 
 	_pins = (int *) malloc(sizeof(int) * npins);
 	_muxes = (int *) malloc(sizeof(int) * nmuxes);
@@ -58,25 +61,9 @@ uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxe
 		_muxes[i] = muxes[i];
 		pinMode(muxes[i], OUTPUT);
 	}
-	uint16_t max = npins * nmuxes / 8 + 1; // Stored values
 	for (i = 0; i < max; i++) {
 		_values[i] = 0;
 	}
-}
-
-
-/**
- * \brief Constructor
- *
- * @param npins Number of pins
- * @param nmuxes Number of muxes
- * @param pins array of pins for outputs
- * @param muxes array of pins for muxes
- * @param freq Refresh frequency (for all pins, will be multiplied by nmuxes to calculate end result)
- */
-uMuxOutputLib::uMuxOutputLib(uint8_t npins, uint8_t nmuxes, int *pins, int *muxes, unsigned int freq) {
-	_freq = freq;
-	uMuxOutputLib(npins, nmuxes, pins, muxes);
 }
 
 
@@ -186,3 +173,4 @@ void uMuxOutputLib::_interrupt() {
 	_lastMux = _currentMux;
 	_currentMux = (_currentMux + 1) % _nmuxes;
 }
+
